@@ -152,7 +152,8 @@ jobs:
           - >-
             streaming, sql-kafka-0-10, streaming-kafka-0-10,
             mllib-local, mllib,
-            yarn, mesos, kubernetes, hadoop-cloud, spark-ganglia-lgpl
+            yarn, mesos, kubernetes, hadoop-cloud, spark-ganglia-lgpl,
+            connect, protobuf
         # Here, we split Hive and SQL tests into some of slow ones and the rest of them.
         included-tags: [""]
         excluded-tags: [""]
@@ -275,6 +276,8 @@ jobs:
       fromJson(needs.precondition.outputs.required).sparkr == 'true') &&
       inputs.branch == 'master'
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     steps:
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
@@ -334,7 +337,7 @@ jobs:
           - >-
             pyspark-pandas-slow
           - >-
-            pyspark-sql-connect
+            pyspark-connect
     env:
       MODULES_TO_TEST: ${{ matrix.modules }}
       HADOOP_PROFILE: ${{ inputs.hadoop }}
@@ -605,7 +608,7 @@ jobs:
     - name: Python linter
       run: PYTHON_EXECUTABLE=python3.9 ./dev/lint-python
     - name: Python code generation check
-      run: PATH=$PATH:$HOME/buf/bin PYTHON_EXECUTABLE=python3.9 ./dev/check-codegen-python.py
+      run: if test -f ./dev/check-codegen-python.py; then PATH=$PATH:$HOME/buf/bin PYTHON_EXECUTABLE=python3.9 ./dev/check-codegen-python.py; fi
     - name: R linter
       run: ./dev/lint-r
     - name: JS linter
