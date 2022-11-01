@@ -114,8 +114,8 @@
     <maven.version>3.8.6</maven.version>
     <exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
     <sbt.project.name>spark</sbt.project.name>
-    <slf4j.version>2.0.3</slf4j.version>
-    <log4j.version>2.19.0</log4j.version>
+    <slf4j.version>1.7.32</slf4j.version>
+    <log4j.version>2.17.2</log4j.version>
     <!-- make sure to update IsolatedClientLoader whenever this version is changed -->
     <hadoop.version>3.3.4</hadoop.version>
     <protobuf.version>2.5.0</protobuf.version>
@@ -2549,7 +2549,7 @@
         <groupId>org.apache.orc</groupId>
         <artifactId>orc-mapreduce</artifactId>
         <version>${orc.version}</version>
-        <classifier>${orc.classifier}</classifier>
+        <!-- <classifier>${orc.classifier}</classifier> -->
         <scope>${orc.deps.scope}</scope>
         <exclusions>
           <exclusion>
